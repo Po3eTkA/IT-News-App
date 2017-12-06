@@ -1,4 +1,4 @@
-# Scoreboard App
+# It News App
 
 ## Перед стартом необходимо:
 
