@@ -17,7 +17,7 @@ const fileNamePrefix = production ? '.[chunkhash]' : '';
 const pluginsBase = [
   new HtmlWebpackPlugin({
     template: './index.html',
-    title: 'It News App',
+    title: 'Sort & Search App',
     excludeChunks: ['base'],
     filename: 'index.html',
     minify: {
@@ -115,7 +115,8 @@ module.exports = {
   },
 
   output: {
-    filename: 'js/[name].js',
+    filename: `js/[name]${fileNamePrefix}.js`,
+    pathinfo: true,
     chunkFilename: 'js/chunks/chunk.[name]-[chunkhash].js',
     path: path.resolve(__dirname, 'dist'),
   },
