@@ -28,11 +28,11 @@ const pluginsBase = [
     },
     inject: 'body',
   }),
-    new FaviconsWebpackPlugin({
-      logo: './favicon.png',
-      background: SETTINGS.THEME_COLOR,
-      icons: SETTINGS.FAVICONS,
-    }),
+  new FaviconsWebpackPlugin({
+    logo: './favicon.png',
+    background: SETTINGS.THEME_COLOR,
+    icons: SETTINGS.FAVICONS,
+  }),
   new ScriptExtHtmlWebpackPlugin({
     defaultAttribute: 'defer',
   }),
@@ -146,7 +146,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(svg|eot|ttf|woff|woff2)$/,
+        test: /\.(eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -154,17 +154,52 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpe?g|gif)$/,
-        loaders: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 10000,
-              name: 'assets/images/[name].[ext]',
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+            name: 'assets/images/[name].[ext]',
+          },
+        },
+      },
+      // {
+      //   test: /\.svg$/,
+      //   use: {
+      //     loader: 'svg-url-loader',
+      //     options: {
+      //       limit: 10000,
+      //       noquotes: true,
+      //       name: 'assets/images/[name].[ext]',
+      //     },
+      //   },
+      // },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: {
+          loader: 'img-loader',
+          options: {
+            enabled: process.env.NODE_ENV === 'production',
+            gifsicle: {
+              interlaced: false,
+            },
+            mozjpeg: {
+              progressive: true,
+              arithmetic: false,
+            },
+            optipng: false, // disabled
+            pngquant: {
+              floyd: 0.5,
+              speed: 2,
+            },
+            svgo: {
+              plugins: [
+                { removeTitle: true },
+                { convertPathData: false },
+              ],
             },
           },
-          'img-loader',
-        ],
+        },
       },
       {
         test: /\.(css|scss)$/,
