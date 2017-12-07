@@ -14,6 +14,9 @@ const StyledButton = styled.button`
   border-radius: ${({ round }) => (round === true ? '1rem' : 'none')};
   outline: none;
   cursor: pointer;
+  appearance: none;
+  -webit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webit-tap-highlight-color: transparent;
   transition: all .3s;
   ${({ activeSortKey }) => typeof activeSortKey === 'string' && css`
     color: ${white};
